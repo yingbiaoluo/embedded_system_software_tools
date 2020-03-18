@@ -5,10 +5,12 @@ group assignment of class in SS-PKU<br>
 1. [0B703-勇哥招亲组-构建主机端开发环境（上）](./assignment1/0B703-勇哥招亲组-构建主机端开发环境（上）.md)
 2. [0B703-勇哥招亲组-多进程编程](./assignment2/0B703-勇哥招亲组-多进程编程.md)
 
-
+学习笔记：
+1. [Linux介绍](./notes/Linux介绍.md)
+2. [Linux进程调度](./notes/Linux进程调度.md)
 
 
 --------------
 附录：
 
-Emoji符号码：GitHub官方网页[https://www.webfx.com/tools/emoji-cheat-sheet/](https://www.webfx.com/tools/emoji-cheat-sheet/)
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) Emoji符号码：GitHub官方网页[https://www.webfx.com/tools/emoji-cheat-sheet/](https://www.webfx.com/tools/emoji-cheat-sheet/)
