@@ -11,6 +11,7 @@ Linux进程调度
 ## 三、进程间通信：
 
 ### 3.1 管道（pipes）
+管道是进程之间的一个单向数据流：一个进程写入管道的所有数据都由内核定向到另一个进程，另一个进程由此就可以从管道中读取数据。<br>
 A *pipe* is a one-way flow of data between processes: all data written by a process to the pipe is routed by the kernel to another process, which can thus read it.
 
 ### 3.2 FIFO

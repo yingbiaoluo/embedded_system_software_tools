@@ -9,8 +9,9 @@ embedded_system_software_tools
 2. [0B703-勇哥招亲组-多进程编程](./assignment2/0B703-勇哥招亲组-多进程编程.md)
 
 ## 学习笔记：
-1. [Linux介绍](./notes/Linux介绍.md)
-2. [Linux进程调度](./notes/Linux进程调度.md)
+1. [git学习笔记](./notes/git学习笔记.md)
+2. [Linux介绍](./notes/Linux介绍.md)
+3. [Linux进程调度](./notes/Linux进程调度.md)
 
 参考资料：
 1. 学习git命令：[https://github.com/pcottle/learnGitBranching](https://github.com/pcottle/learnGitBranching)
