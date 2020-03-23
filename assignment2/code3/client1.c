@@ -82,20 +82,20 @@ void main(){
                 }
             }
         }//while
-        printf("-------------提示：客户端子进程结束,终止写入\n");
-        _exit(0);
+        printf("---提示：客户端子进程结束,终止写入\n");
+        exit(0);
     }else{
         //父进程用于持续读
         printf("客户端父进程开始\n");
-        printf("\n-----------提示：客户端可以读取消息\n");
+        printf("\n---提示：客户端可以读取消息\n");
         while(1){
             if( read(fd_r,msg_r,BUFSIZ) == -1 ){
                 perror("客户端读取消息失败");
             }else{
                 if( strlen(msg_r) > 0 ){
-                    printf("************客户端收到水果信息:%s\n",msg_r);
+                    printf("***客户端收到水果信息:%s\n",msg_r);
                     if (strcmp("不用了",msg_r) == 0){
-                        printf("客户端朋友丢失，无法读取消息\n");
+                        printf("客户端不用水果了！\n");
                         break;
                     }
                 }else{
@@ -104,7 +104,7 @@ void main(){
                 printf("(客户端读取消息完成)\n\n");
             }
         }//while
-        printf("---------------------提示：客户端父进程结束,终止读取\n");
+        printf("---提示：客户端父进程结束,终止读取\n");
         wait(NULL);
     }
 

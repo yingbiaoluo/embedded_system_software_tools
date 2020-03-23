@@ -20,15 +20,13 @@ int searchFruit(const char* table[], const int size, const char* key)
     printf("正在查找水果：%s\n", key);
     for (i = 0; i < size; i++)
     {
-        printf("%s", table[i]);
-        printf("\t%s\n", key);
-        if (table[i]==key)
+        if (strcmp(table[i], key)==0)
         {
             return 1;
         }
 
     }
-    if(key=="不用了"){
+    if(strcmp(key,"不用了")==0){
         return 2;
     }
     return 0;
@@ -52,7 +50,7 @@ void main(){
     int *read_fd = &fd[0];
 
     int fruit_class = 4;
-    const char *fruits[] = {"苹果", "apple","香蕉","橙子"};
+    const char *fruits[] = {"苹果", "梨子","香蕉","橙子"};
     int exist_fruit;
     char *have_fruit;
     char *key;
@@ -108,21 +106,16 @@ void main(){
     }else if (pid==0){
         //子进程用于持续读
         printf("服务端子进程开始\n");
-        printf("-----提示：服务端可以读取消息\n");
+        printf("---提示：服务端可以读取消息\n\n");
         while(1){
             if( read(fd_r, msg_r, BUFSIZ) == -1){
                 perror("服务端读取消息失败");
             }else{
                 if(strlen(msg_r)>0){
                     printf("***服务端读取到水果信息:%s\n", msg_r);
-                    printf("%s\n", msg_r);
-                    if(strcmp("苹果", msg_r)==0){
-                        printf("是苹果！！！");
-                    }
 
                     //有无水果
                     exist_fruit = searchFruit(fruits, fruit_class, msg_r);
-                    printf("exist fruit: %d\n", exist_fruit);
                     if(exist_fruit==1){
                         have_fruit = msg_r;
                     } else if (exist_fruit==2){
@@ -130,8 +123,11 @@ void main(){
                     } else{
                         have_fruit = "没有该水果了";
                     }
+                    //将有无水果写入无名管道
+                    close(*read_fd);
+                    result = write(*write_fd, have_fruit, strlen(have_fruit)+1);
 
-                    if(strcmp("不用了", msg_r)==0){
+                    if(strcmp("不用了", have_fruit)==0){
                         printf("服务端终止读取\n");
                         break;
                     }
@@ -140,16 +136,13 @@ void main(){
                 }
                 printf("(服务器读取消息完成)\n");
             }
-            //将有无水果写入无名管道
-            close(*read_fd);
-            result = write(*write_fd, have_fruit, strlen(have_fruit)+1);
         }
-        printf("---------提示：服务端子进程结束，终止读取\n");
-        _exit(0);
+        printf("---提示：服务端子进程结束，终止读取\n");
+        exit(0);
     } else{
         //父进程用于持续写
         printf("父进程开始\n");
-        printf("\n----------提示：服务端可查找水果！！！\n");
+        printf("\n---提示：服务端可查找水果！！！\n");
         while(1){
             close(*write_fd);
             nbytes = read(*read_fd, msg_w, sizeof(msg_w)-1);
@@ -160,12 +153,12 @@ void main(){
                 printf("***服务端发送水果信息：%s\n",msg_w);
                 printf("(服务端写入完成)\n\n");
                 if(strcmp("不用了", msg_w)==0){
-                    printf("客户端不在要水果了！停止供应！");
+                    printf("客户端不在要水果了！停止供应！\n");
                     break;
                 }
             }
         }
-        printf("---------提示：服务端父进程结束，终止写入\n");
+        printf("---提示：服务端父进程结束，终止写入\n");
         wait(NULL);
     }
 
