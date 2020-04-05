@@ -3,16 +3,15 @@
 #include <string.h>
 #include <unistd.h>
 
-/** 运用Posix信号量使用”读者优先”策略解决”读者写者问题”
+/** 运用Posix信号量使用”写者优先”策略解决”读者写者问题”
 解题思路:
-如果新读者到：
-　　　①无读者、写者，新读者可以读；
-　　　②有写者等待，但有其它读者正在读，则新读者也可以读；
-　　　③有写者写，新读者等待。
 如果新写者到：
-　　　①无读者，新写者可以写；
-　　　②有读者，新写者等待；
-　　　③有其它写者，新写者等待。
+　　　①无写者、读者，新写者可以写；
+　　　②有其它写者正在写，则新写者等待其他写者写完；
+　　　③有读者读或等待，无其他写者，新写者直接写。
+如果新读者到：
+　　　①无写者或者有其它读者，新读者可以读；
+　　　②有写者，新读者等待；
 **/
 // 需要用两个互斥量实现
 pthread_mutex_t rmutex;
@@ -30,6 +29,7 @@ char ch = 'A';  //写者需要写入的字母
 pthread_t thread[READERCOUNT+WRITERCONUT];  //读者+写者线程
 
 int nReader = 0;
+int nWriter = 0;
 //读者线程
 void *reader(void *args)
 {
@@ -39,22 +39,12 @@ void *reader(void *args)
     while (true)
     {
         pthread_mutex_lock(&rmutex);
-        //如果是第一个读者, 则锁定wmutex
-        if (nReader == 0)
-            pthread_mutex_lock(&wmutex);
-        ++ nReader;
-        pthread_mutex_unlock(&rmutex);
 
         //开始读
         printf("-----%d号读者正在读...\n", number);
         printf("%d号读者读到内容: %s\n", number, paper);
         printf("-----%d号读者读完毕.\n\n", number);
 
-        pthread_mutex_lock(&rmutex);
-        -- nReader;
-        //如果是最后一个读者, 则解锁wmutex
-        if (nReader == 0)
-            pthread_mutex_unlock(&wmutex);
         pthread_mutex_unlock(&rmutex);
 
         sleep(1);
@@ -71,7 +61,10 @@ void *writer(void *args)
     {
         //获取写锁
         pthread_mutex_lock(&wmutex);
+        //获取读锁
+        pthread_mutex_lock(&rmutex);
         //开始写
+
         printf("-----%d号写者正在写...\n", number);
         printf("%d号写者写入的数据是: %c\n", number, ch);
         paper[write_index] = ch;
@@ -80,6 +73,9 @@ void *writer(void *args)
         if (ch > 'Z')
             ch = 'A';
         printf("-----%d号写者写完毕...\n\n", number);
+
+        //释放读锁
+        pthread_mutex_unlock(&rmutex);
         //释放写锁
         pthread_mutex_unlock(&wmutex);
 
