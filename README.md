@@ -2,7 +2,7 @@ embedded_system_software_tools
 ================
 
 组名：:heartbeat:勇:cupid:哥:blush:招:heartpulse:亲:revolving_hearts:组 :sparkling_heart:<br>
-成员：赵勇、罗颖彪、杜佳卓<br>
+成员：赵勇、罗颖彪、杜嘉卓<br>
 
 ## 小组作业：
 1. [0B703-勇哥招亲组-构建主机端开发环境（上）](./assignment1/0B703-勇哥招亲组-构建主机端开发环境（上）.md)
@@ -15,6 +15,7 @@ embedded_system_software_tools
 
 参考资料：
 1. 学习git命令：[https://github.com/pcottle/learnGitBranching](https://github.com/pcottle/learnGitBranching)
+2. UNIX环境高级编程(Advanced Programming in the UNIX Enviroment)  :heart:**墙裂推荐**:heart:
 --------------
 附录：
 
