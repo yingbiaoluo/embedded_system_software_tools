@@ -14,6 +14,7 @@ embedded_system_software_tools
 2. [Linux介绍](./notes/Linux介绍.md)
 3. [Linux进程调度](./notes/Linux进程调度.md)
 4. [POSIX标准](./notes/POSIX标准.md)
+5. [多线程基本编程](./notes/多线程基本编程.md)
 
 
 参考资料：
